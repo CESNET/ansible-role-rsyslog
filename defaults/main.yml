@@ -1,0 +1,6 @@
+---
+# List of rsyslog configuration files which will be copied to /etc
+# Default values: "rsyslog.conf", "rsyslog.d/example_service.conf"
+rsyslog_configuration_files:
+  - rsyslog.conf
+  - rsyslog.d/example_service.conf

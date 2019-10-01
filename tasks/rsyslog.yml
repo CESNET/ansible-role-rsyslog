@@ -1,0 +1,23 @@
+---
+- name: Install rsyslog
+  package:
+    name: "rsyslog"
+    state: present
+  tags:
+    - install
+
+- name: Ensure the configuration directory exist
+  file:
+    path: "/etc/rsyslog.d"
+    state: directory
+
+- name: Copy rsyslog configuration files
+  copy:
+    src: '{{ item }}'
+    dest: '/etc/{{ item }}'
+    owner: root
+    group: root
+    mode: 0644
+  loop: '{{ rsyslog_configuration_files }}'
+  tags:
+    - configuration
