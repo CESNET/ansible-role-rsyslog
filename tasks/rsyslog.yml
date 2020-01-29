@@ -21,3 +21,14 @@
   loop: '{{ rsyslog_configuration_files }}'
   tags:
     - configuration
+
+- name: Create rsyslog configuration files from template
+  template:
+    src: '{{ item }}'
+    dest: '/etc/{{ item }}'
+    owner: root
+    group: root
+    mode: 0644
+  loop: '{{ rsyslog_configuration_templates }}'
+  tags:
+    - configuration

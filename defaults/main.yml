@@ -4,3 +4,8 @@
 rsyslog_configuration_files:
   - rsyslog.conf
   - rsyslog.d/example_service.conf
+
+# List of rsyslog configuration templates from which will be created in /etc
+rsyslog_configuration_templates:
+  - rsyslog.conf.jinja2
+  - rsyslog.d/example_service.conf.jinja2
