@@ -24,7 +24,7 @@
 
 - name: Create rsyslog configuration files from template
   template:
-    src: '{{ item }}'
+    src: '{{ item }}.jinja2'
     dest: '/etc/{{ item }}'
     owner: root
     group: root
