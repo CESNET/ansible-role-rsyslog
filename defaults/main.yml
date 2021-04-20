@@ -1,11 +1,36 @@
 ---
+# List of directories which will be created
+# Example value: 
+# rsyslog_files:
+#   - { path: "/etc/rsyslog.d", owner: "root", group: "root", mode: "0755"}
+# ,where:
+#  * path - required
+#  * owner - optional - default 'root'
+#  * group - optional - default 'root'
+#  * mode - optional - default '0755'
+rsyslog_dirs:
+  - { path: "/etc/rsyslog.d"}
+
 # List of rsyslog configuration files which will be copied to /etc
-# Default values: "rsyslog.conf", "rsyslog.d/example_service.conf"
-rsyslog_configuration_files:
-  - rsyslog.conf
-  - rsyslog.d/example_service.conf
+# Example value: 
+# rsyslog_files:
+#   - { src: "rsyslog.d/app1.conf", dest: "rsyslog.d/app1.conf", owner: "root", group: "root", mode: "0644"}
+# ,where:
+#  * src - required
+#  * dest - recommended; if not set, 'src' will be used; Relative to '/etc/'
+#  * owner - optional - default 'root'
+#  * group - optional - default 'root'
+#  * mode - optional - default '0644'
+rsyslog_files: []
 
 # List of rsyslog configuration templates from which will be created in /etc
-rsyslog_configuration_templates:
-  - rsyslog.conf.jinja2
-  - rsyslog.d/example_service.conf.jinja2
+# Example value: 
+# logrotate_templates:
+#   - { src: "rsyslog.d/app1.conf", dest: "rsyslog.d/app1.conf", owner: "root", group: "root", mode: "0644"}
+# ,where:
+#  * src - required; without '.j2'
+#  * dest - recommended; if not set, 'src' will be used; Relative to '/etc/
+#  * owner - optional - default 'root'
+#  * group - optional - default 'root'
+#  * mode - optional - default '0644'
+rsyslog_templates: []

@@ -1,34 +1,40 @@
 ---
-- name: Install rsyslog
+- name: "RSYSLOG - Install required packages"
   package:
     name: "rsyslog"
     state: present
   tags:
     - install
 
-- name: Ensure the configuration directory exist
+- name: "RSYSLOG - Ensure that directory are created"
   file:
-    path: "/etc/rsyslog.d"
+    path: "{{ item.path }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0755') }}"
     state: directory
+  loop: "{{ rsyslog_dirs }}"
 
-- name: Copy rsyslog configuration files
+- name: "RSYSLOG - Copy rsyslog configuration files"
   copy:
-    src: '{{ item }}'
-    dest: '/etc/{{ item }}'
-    owner: root
-    group: root
-    mode: 0644
-  loop: '{{ rsyslog_configuration_files }}'
+    src: "{{ item.src }}"
+    dest: "/etc/{{ item.dest | default(item.src) }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0644') }}"
+  loop: "{{ rsyslog_files }}"
+  notify: "restart rsyslog"
   tags:
     - configuration
 
-- name: Create rsyslog configuration files from template
+- name: "RSYSLOG - Create rsyslog configuration files from template"
   template:
-    src: '{{ item }}.jinja2'
-    dest: '/etc/{{ item }}'
-    owner: root
-    group: root
-    mode: 0644
-  loop: '{{ rsyslog_configuration_templates }}'
+    src: "{{ item.src }}.j2"
+    dest: "/etc/{{ item.dest | default(item.src) }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0644') }}"
+  loop: "{{ rsyslog_templates }}"
+  notify: "restart rsyslog"
   tags:
     - configuration
