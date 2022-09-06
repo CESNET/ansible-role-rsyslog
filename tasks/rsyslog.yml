@@ -1,8 +1,11 @@
 ---
 - name: "RSYSLOG - Install required packages"
   package:
-    name: "rsyslog"
+    name: "{{ item }}"
     state: present
+  loop: 
+    - "rsyslog"
+    - "rsyslog-gnutls"
   tags:
     - install
 
